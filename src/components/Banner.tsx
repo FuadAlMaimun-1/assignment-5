@@ -44,9 +44,9 @@ const Banner = () => {
         </div>
       </div>
 
-      {/* ডান পাশের ইমেজ সেকশন */}
-      <div>
-        <img src={Logo} alt="Banner Stack" className="max-w-md w-full" />
+      
+      <div className="flex justify-center shrink-0 sm:grid-cols-1">
+        <img src={Logo} alt="Banner Stack" className="max-w-md w-full " />
       </div>
     </div>
   );
