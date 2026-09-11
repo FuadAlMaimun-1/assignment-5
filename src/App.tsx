@@ -1,34 +1,34 @@
+import { Suspense } from "react";
+import "./App.css";
+import Nav from "./components/Nav";
+import Banner from "./components/Banner";
+import type { Itechnology } from "./type/Type";
+import Card from "./components/card/card";
 
-import { Suspense } from 'react';
-import './App.css'
+const getTechs = async (): Promise<Itechnology[]> => {
+  const res = await fetch("/data.json");
+  return res.json();
+};
 
-import Nav from './components/Nav';
-import Banner from './components/Banner';
+const cardPromise: Promise<Itechnology[]> = getTechs();
 
 function App() {
-
-  const CarddPromise = async() => {
-    const res = await fetch("/data.json")
-    const data = await res.json()
-    return data;
-  }
-  
   return (
-
     <>
       <Nav />
       <Banner />
 
-      {/* <Suspense fallback={
-        <div className="flex justify-center items-center min-h-[200px]">
-            <div className="w-10 h-10 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
-          </div>}>
-      }>
-      
-      </Suspense> */}
-
+      <Suspense
+        fallback={
+          <div className="flex justify-center items-center min-h-50">
+            <div className="w-10 h-10 border-4 border-gray-300 border-t-[#DB2777] rounded-full animate-spin"></div>
+          </div>
+        }
+      >
+        <Card cardPromise={cardPromise} />
+      </Suspense>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
