@@ -16,7 +16,7 @@ const Card = ({ cardPromise }: CardProps) => {
 
   const [selectedTechs, setSelectedTechs] = useState<Itechnology[]>([]);
 
-
+ 
   const handleAddToStack = (tech: Itechnology) => {
     setSelectedTechs((card) => [...card, tech]);
 
