@@ -1,19 +1,25 @@
 import { use, useState } from "react";
 import type { Itechnology } from "../../type/Type";
 import { toast, ToastContainer, Bounce } from "react-toastify";
-import { TiDelete } from "react-icons/ti";
+import SelectedCard from "./SelectedCard"; 
+
 import "react-toastify/dist/ReactToastify.css";
+
 
 interface CardProps {
   cardPromise: Promise<Itechnology[]>;
 }
 
 const Card = ({ cardPromise }: CardProps) => {
+
   const techs = use(cardPromise);
+
   const [selectedTechs, setSelectedTechs] = useState<Itechnology[]>([]);
+
 
   const handleAddToStack = (tech: Itechnology) => {
     setSelectedTechs((card) => [...card, tech]);
+
     toast.success(`Added ${tech.name} to stack!`, {
       position: "top-center",
       autoClose: 3000,
@@ -29,8 +35,8 @@ const Card = ({ cardPromise }: CardProps) => {
   const handleRemove = (id: string | number, name: string) => {
     setSelectedTechs((card) => card.filter((item) => item.id !== id));
     toast.info(`Removed ${name} from stack`, {
-      position: "top-center",
-      autoClose: 5000,
+      position: "top-left",
+      autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: false,
       pauseOnHover: true,
@@ -45,7 +51,7 @@ const Card = ({ cardPromise }: CardProps) => {
     setSelectedTechs([]);
     toast.warn("Cleared all technologies from stack", {
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: false,
       pauseOnHover: true,
@@ -72,6 +78,8 @@ const Card = ({ cardPromise }: CardProps) => {
           Pick one technology per category to build your ideal stack.
         </p>
       </div>
+
+      {/* Card */}
       <div className="flex flex-col lg:flex-row gap-6 items-start">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 flex-1">
           {techs.map((item) => {
@@ -135,64 +143,13 @@ const Card = ({ cardPromise }: CardProps) => {
           })}
         </div>
 
-        <div className="w-full lg:w-[280px] min-h-[175px] h-fit border border-gray-200 rounded-2xl p-5 bg-white sticky top-24">
-          <div className="flex items-baseline gap-2 mb-1">
-            <h3 className="font-bold text-gray-900">Your Stack</h3>
-          </div>
-          <p className="text-xs text-gray-400 mb-4">
-            {selectedTechs.length === 0
-              ? "No technologies selected yet"
-              : `${selectedTechs.length} ${
-                  selectedTechs.length === 1 ? "technology" : "technologies"
-                } selected`}
-          </p>
+        {/* Stack Card Components */}
 
-          {selectedTechs.length === 0 ? (
-            <div className="w-full h-[66px] border-2 border-dashed border-gray-100 rounded-xl flex text-center items-center justify-center">
-              <p className="text-gray-400">Your stack is empty.</p>
-            </div>
-          ) : (
-            <div className="space-y-3 mb-4">
-              {selectedTechs.map((tech) => (
-                <div
-                  key={tech.id}
-                  className="flex items-center justify-between px-3 py-3 rounded-lg border border-gray-100 hover:border-gray-200 hover:bg-gray-50 transition-all duration-200 group"
-                >
-                  <div className="flex items-center gap-3">
-                    <img
-                      src={tech.icon}
-                      alt={tech.name}
-                      className="w-6 h-6 object-contain"
-                    />
-                    <div>
-                      <h4 className=" font-bold text-gray-800">{tech.name}</h4>
-                      <p className="text-[10px] text-gray-400">
-                        {tech.category}
-                      </p>
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={() => handleRemove(tech.id, tech.name)}
-                    className="text-gray-600 hover:text-red-500 text-xl font-bold px-1"
-                  >
-                    <TiDelete />
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Remove All Button */}
-          {selectedTechs.length > 0 && (
-            <button
-              onClick={handleRemoveAll}
-              className="w-full mt-4 px-4 py-1 cursor-pointer font-bold rounded-lg transition-all border border-red-500 text-red-500 hover:bg-red-50 active:bg-red-100 text-xs"
-            >
-              Remove All
-            </button>
-          )}
-        </div>
+        <SelectedCard
+          selectedTechs={selectedTechs}
+          onRemove={handleRemove}
+          onRemoveAll={handleRemoveAll}
+        />
       </div>
     </div>
   );
