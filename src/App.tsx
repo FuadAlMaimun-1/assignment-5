@@ -7,7 +7,8 @@ import Card from "./components/card/card";
 
 const getTechs = async (): Promise<Itechnology[]> => {
   const res = await fetch("/data.json");
-  return res.json();
+  const  data = res.json();
+  return data;
 };
 
 const cardPromise: Promise<Itechnology[]> = getTechs();
