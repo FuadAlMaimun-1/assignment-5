@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import type { Itechnology } from "../../type/Type";
 import { TiDelete } from "react-icons/ti";
 
@@ -7,17 +8,19 @@ interface SelectedCardProps {
   onRemoveAll: () => void;
 }
 
-
-const SelectedCard = ({ selectedTechs, onRemove, onRemoveAll,
+const SelectedCard = ({
+  selectedTechs,
+  onRemove,
+  onRemoveAll,
 }: SelectedCardProps) => {
-    
+  useEffect(() => {}, [selectedTechs]);
+
   return (
-    
     <div className="w-full lg:w-[280px] min-h-[175px] border border-gray-200 rounded-2xl p-5 bg-white sticky top-24">
       <div className="flex items-baseline gap-2 mb-1">
-         <h3 className="font-bold text-gray-900">Your Stack</h3>
+        <h3 className="font-bold text-gray-900">Your Stack</h3>
       </div>
-      <p className="text-gray-400 mb-4">
+      <p className="text-gray-400 mb-4 text-xs">
         {selectedTechs.length === 0
           ? "No technologies selected yet"
           : `${selectedTechs.length} ${
@@ -29,7 +32,7 @@ const SelectedCard = ({ selectedTechs, onRemove, onRemoveAll,
 
       {selectedTechs.length === 0 ? (
         <div className="w-full h-[66px] border-2 border-dashed border-gray-100 rounded-xl flex text-center items-center justify-center">
-          <p className="text-gray-400">Your stack is empty.</p>
+          <p className="text-gray-400 text-sm">Your stack is empty.</p>
         </div>
       ) : (
         <div className="space-y-3 mb-4">
@@ -42,17 +45,19 @@ const SelectedCard = ({ selectedTechs, onRemove, onRemoveAll,
                 <img
                   src={tech.icon}
                   alt={tech.name}
-                  className="w-7 h-6"
+                  className="w-7 h-6 object-contain"
                 />
                 <div>
-                  <h4 className="font-bold text-gray-800">{tech.name}</h4>
+                  <h4 className="font-bold text-gray-800 text-sm">
+                    {tech.name}
+                  </h4>
                   <p className="text-[10px] text-gray-400">{tech.category}</p>
                 </div>
               </div>
 
               <button
                 onClick={() => onRemove(tech.id, tech.name)}
-                className="text-gray-600 hover:text-red-500 text-xl font-bold px-1"
+                className="text-gray-600 hover:text-red-500 text-xl font-bold px-1 cursor-pointer"
               >
                 <TiDelete />
               </button>
@@ -64,7 +69,7 @@ const SelectedCard = ({ selectedTechs, onRemove, onRemoveAll,
       {selectedTechs.length > 0 && (
         <button
           onClick={onRemoveAll}
-          className="w-full mt-4 px-4 py-1.5 cursor-pointer font-bold rounded-lg transition-all border border-red-500 text-red-500 hover:bg-red-50 active:bg-red-100 text-xs"
+          className="w-full mt-2 px-4 py-1.5 cursor-pointer font-bold rounded-lg transition-all border border-red-500 text-red-500 hover:bg-red-50 active:bg-red-100 text-xs"
         >
           Remove All
         </button>

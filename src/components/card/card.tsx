@@ -1,22 +1,18 @@
 import { use, useState } from "react";
 import type { Itechnology } from "../../type/Type";
 import { toast, ToastContainer, Bounce } from "react-toastify";
-import SelectedCard from "./SelectedCard"; 
+import SelectedCard from "./SelectedCard";
 
 import "react-toastify/dist/ReactToastify.css";
-
 
 interface CardProps {
   cardPromise: Promise<Itechnology[]>;
 }
 
 const Card = ({ cardPromise }: CardProps) => {
-
   const techs = use(cardPromise);
-
   const [selectedTechs, setSelectedTechs] = useState<Itechnology[]>([]);
 
- 
   const handleAddToStack = (tech: Itechnology) => {
     setSelectedTechs((card) => [...card, tech]);
 
@@ -64,7 +60,6 @@ const Card = ({ cardPromise }: CardProps) => {
 
   return (
     <div className="container mx-auto max-w-6xl lg:ml-60 md:ml-60 lg:-mt-35">
-
       <ToastContainer />
 
       <div className="mb-10">

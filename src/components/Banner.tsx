@@ -20,22 +20,26 @@ const Banner = () => {
         </p>
 
         <div className="flex gap-4 pt-2">
-          <button onClick={() => setActiveHeroBtn("explore")}
-            className={`px-5 py-2 rounded-lg font-medium cursor-pointer  ${activeHeroBtn === "explore" ? "bg-gradient-to-r from-[#F97316] to-[#EC4899] text-white" : "border border-gray-300 text-gray-700 hover:bg-gray-50" }`}>
+          <button
+            onClick={() => setActiveHeroBtn("explore")}
+            className={`px-5 py-2 rounded-lg font-medium cursor-pointer  ${activeHeroBtn === "explore" ? "bg-gradient-to-r from-[#F97316] to-[#EC4899] text-white" : "border border-gray-300 text-gray-700 hover:bg-gray-50"}`}
+          >
             Explore Technologies
           </button>
 
           <button
             onClick={() => setActiveHeroBtn("learn")}
             className={`px-5 py-2 rounded-lg font-medium cursor-pointer  ${
-              activeHeroBtn === "learn" ? "bg-gradient-to-r from-[#F97316] to-[#EC4899] text-white"  : "border border-gray-300 text-gray-700 hover:bg-gray-50"
-            }`}>
+              activeHeroBtn === "learn"
+                ? "bg-gradient-to-r from-[#F97316] to-[#EC4899] text-white"
+                : "border border-gray-300 text-gray-700 hover:bg-gray-50"
+            }`}
+          >
             Learn More
           </button>
         </div>
       </div>
 
-      
       <div>
         <img src={Logo} alt="Banner logo" className="mt-[-100px]" />
       </div>
