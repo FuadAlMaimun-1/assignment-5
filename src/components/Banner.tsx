@@ -5,7 +5,7 @@ const Banner = () => {
   const [activeHeroBtn, setActiveHeroBtn] = useState("explore");
 
   return (
-    <div className="flex justify-between items-center container mx-auto px-4 my-12 gap-8">
+    <div className="container mx-auto px-4 py-8 max-w-7xl lg:ml-60 md:ml-60 flex">
       <div className="max-w-xl space-y-8">
         <h1 className="text-6xl font-bold text-black leading-tight">
           Build Your Ideal <br />

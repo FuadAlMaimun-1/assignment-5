@@ -1,100 +1,52 @@
 import { use, useState } from "react";
 import type { Itechnology } from "../../type/Type";
+import { toast, ToastContainer, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface CardProps {
   cardPromise: Promise<Itechnology[]>;
 }
 
-interface Toast {
-  id: string;
-  type: "success" | "info" | "error";
-  message: string;
-  icon: string;
-}
-
 const Card = ({ cardPromise }: CardProps) => {
   const techs = use(cardPromise);
-
   const [selectedTechs, setSelectedTechs] = useState<Itechnology[]>([]);
-  const [toasts, setToasts] = useState<Toast[]>([]);
-
-  const showToast = (
-    message: string,
-    type: "success" | "info" | "error" = "success",
-    icon: string = "✓",
-  ) => {
-    const id = Date.now().toString();
-    setToasts((prev) => [...prev, { id, message, type, icon }]);
-
-    setTimeout(() => {
-      setToasts((prev) => prev.filter((toast) => toast.id !== id));
-    }, 2000);
-  };
 
   const handleAddToStack = (tech: Itechnology) => {
-    const isExist = selectedTechs.find((item) => item.id === tech.id);
-    if (!isExist) {
-      setSelectedTechs([...selectedTechs, tech]);
-      showToast(`${tech.name} added to stack`, "success", "✓");
-    }
+    setSelectedTechs((prev) => [...prev, tech]);
+    toast.success(`Added ${tech.name} to stack!`, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      theme: "light",
+      transition: Bounce,
+    });
   };
 
-  const handleRemove = (id: string, name: string) => {
-    setSelectedTechs(selectedTechs.filter((item) => item.id !== id));
-    showToast(`${name} removed from stack`, "info", "-");
+  const handleRemove = (id: string | number, name: string) => {
+    setSelectedTechs((prev) => prev.filter((item) => item.id !== id));
+    toast.info(`Removed ${name} from stack`, {
+      position: "top-center",
+      autoClose: 2000,
+      theme: "light",
+    });
   };
 
   const handleRemoveAll = () => {
     setSelectedTechs([]);
-    showToast("All technologies cleared", "info", "-");
-  };
-
-  const toastColors = {
-    success: {  
-      bg: "bg-green-50",
-      border: "border-green-200",
-      text: "text-green-800",
-      icon: "text-green-600",
-    },
-    info: {
-      bg: "bg-blue-50",
-      border: "border-blue-200",
-      text: "text-blue-800",
-      icon: "text-blue-600",
-    },
-    error: {
-      bg: "bg-red-50",
-      border: "border-red-200",
-      text: "text-red-800",
-      icon: "text-red-600",
-    },
+    toast.warn("Cleared all technologies from stack", {
+      position: "top-center",
+      autoClose: 2000,
+      theme: "light",
+    });
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl lg:ml-60 md:ml-60">
-      {/* Toast Container */}
-      <div className="fixed inset-x-0 top-6 mx-auto z-50 flex flex-col items-center space-y-3 w-fit">
-        {toasts.map((toast) => {
-          const colors = toastColors[toast.type];
-          return (
-            <div
-              key={toast.id}
-              className={`
-                pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-lg
-                border backdrop-blur-sm
-                animate-in fade-in slide-in-from-right-4 duration-300
-                ${colors.bg} ${colors.border} ${colors.text}
-                shadow-lg
-              `}
-            >
-              <span className={`text-lg font-bold ${colors.icon}`}>
-                {toast.icon}
-              </span>
-              <span className="text-sm font-medium">{toast.message}</span>
-            </div>
-          );
-        })}
-      </div>
+    <div className="container mx-auto px-4 py- max-w-6xl max-y-8xl lg:ml-60 md:ml-60">7
+      {/* react-toastify container */}
+      <ToastContainer />
 
       {/* Header */}
       <div className="mb-8">
@@ -110,7 +62,8 @@ const Card = ({ cardPromise }: CardProps) => {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6 items-start">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 flex-1 w-full">
+        {/* Technologies Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 flex-1">
           {techs.map((item) => {
             const isAdded = selectedTechs.some((tech) => tech.id === item.id);
 
@@ -147,19 +100,18 @@ const Card = ({ cardPromise }: CardProps) => {
                     <span className="bg-gray-100 px-2 py-0.5 rounded">
                       {item.difficulty}
                     </span>
-                    <span className="ml-auto font-medium text-gray-700 flex items-center gap-1">
+                    <span className="ml-auto text-gray-700 flex items-center gap-1">
                       ★ {item.rating}
                     </span>
                   </div>
                 </div>
 
-                {/* Action Button */}
+                
                 <button
                   onClick={() => handleAddToStack(item)}
                   disabled={isAdded}
                   className={`
-                    w-full mt-4 px-4 py-2 cursor-pointer text-sm font-medium rounded-lg
-                    
+                    w-full mt-4 px-4 py-2 cursor-pointer rounded-lg
                     ${
                       isAdded
                         ? "bg-gradient-to-r from-green-50 to-green-50 text-green-600 border border-green-200 cursor-not-allowed"
@@ -174,6 +126,7 @@ const Card = ({ cardPromise }: CardProps) => {
           })}
         </div>
 
+        {/* Selected Stack Sidebar */}
         <div className="w-full lg:w-[280px] min-h-[175px] h-fit border border-gray-200 rounded-2xl p-5 bg-white sticky top-24">
           <div className="flex items-baseline gap-2 mb-1">
             <h3 className="font-bold text-gray-900">Your Stack</h3>
@@ -181,15 +134,14 @@ const Card = ({ cardPromise }: CardProps) => {
           <p className="text-xs text-gray-400 mb-4">
             {selectedTechs.length === 0
               ? "No technologies selected yet"
-              : `${selectedTechs.length} ${selectedTechs.length === 1 ? "technology" : "technologies"} selected`}
+              : `${selectedTechs.length} ${
+                  selectedTechs.length === 1 ? "technology" : "technologies"
+                } selected`}
           </p>
 
           {selectedTechs.length === 0 ? (
-            <div className="w-[238px] h-[66px]  border-2 border-dashed border-gray-100 rounded-xl flex text-center items-center justify-center">
-              <div className="text-3xl mb-2"></div>
-              <p className="text-gray-400 text-shadow-xs">
-                Your stack is empty.
-              </p>
+            <div className="w-full h-[66px] border-2 border-dashed border-gray-100 rounded-xl flex text-center items-center justify-center">
+              <p className="text-gray-400">Your stack is empty.</p>
             </div>
           ) : (
             <div className="space-y-3 mb-4">
@@ -229,7 +181,7 @@ const Card = ({ cardPromise }: CardProps) => {
           {selectedTechs.length > 0 && (
             <button
               onClick={handleRemoveAll}
-              className="w-full mt-4 px-4 py-1 cursor-pointer  font-bold rounded-lg transition-all border border-red-500 text-red-500 hover:bg-red-50 active:bg-red-100"
+              className="w-full mt-4 px-4 py-1 cursor-pointer font-bold rounded-lg transition-all border border-red-500 text-red-500 hover:bg-red-50 active:bg-red-100 text-xs"
             >
               Remove All
             </button>
