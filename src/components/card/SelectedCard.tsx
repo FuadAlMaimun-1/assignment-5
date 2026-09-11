@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+
 import type { Itechnology } from "../../type/Type";
 import { TiDelete } from "react-icons/ti";
 
@@ -13,6 +13,7 @@ const SelectedCard = ({
   onRemove,
   onRemoveAll,
 }: SelectedCardProps) => {
+
   
   return (
     <div className="w-full lg:w-[280px] min-h-[175px] border border-gray-200 rounded-2xl p-5 bg-white sticky top-24">
