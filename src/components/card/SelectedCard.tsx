@@ -13,8 +13,7 @@ const SelectedCard = ({
   onRemove,
   onRemoveAll,
 }: SelectedCardProps) => {
-  useEffect(() => {}, [selectedTechs]);
-
+  
   return (
     <div className="w-full lg:w-[280px] min-h-[175px] border border-gray-200 rounded-2xl p-5 bg-white sticky top-24">
       <div className="flex items-baseline gap-2 mb-1">

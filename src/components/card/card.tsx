@@ -13,20 +13,27 @@ const Card = ({ cardPromise }: CardProps) => {
   const techs = use(cardPromise);
   const [selectedTechs, setSelectedTechs] = useState<Itechnology[]>([]);
 
-  const handleAddToStack = (tech: Itechnology) => {
-    setSelectedTechs((card) => [...card, tech]);
+ const handleAddToStack = (tech: Itechnology) => {
+  const isExist = selectedTechs.some((item) => item.id === tech.id);
 
-    toast.success(`Added ${tech.name} to stack!`, {
-      position: "top-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: false,
-      pauseOnHover: true,
-      draggable: true,
-      theme: "light",
-      transition: Bounce,
-    });
-  };
+  if (isExist) {
+    toast.warning(`${tech.name} is already in your stack!`);
+    return;
+  }
+
+  setSelectedTechs((prev) => [...prev, tech]);
+
+  toast.success(`Added ${tech.name} to stack!`, {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: false,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "light",
+    transition: Bounce,
+  });
+};
 
   const handleRemove = (id: string | number, name: string) => {
     setSelectedTechs((card) => card.filter((item) => item.id !== id));
