@@ -7,13 +7,15 @@ interface SelectedCardProps {
   onRemoveAll: () => void;
 }
 
+
 const SelectedCard = ({ selectedTechs, onRemove, onRemoveAll,
 }: SelectedCardProps) => {
     
   return (
+    
     <div className="w-full lg:w-[280px] min-h-[175px] border border-gray-200 rounded-2xl p-5 bg-white sticky top-24">
       <div className="flex items-baseline gap-2 mb-1">
-        <h3 className="font-bold text-gray-900">Your Stack</h3>
+         <h3 className="font-bold text-gray-900">Your Stack</h3>
       </div>
       <p className="text-gray-400 mb-4">
         {selectedTechs.length === 0
@@ -40,7 +42,7 @@ const SelectedCard = ({ selectedTechs, onRemove, onRemoveAll,
                 <img
                   src={tech.icon}
                   alt={tech.name}
-                  className="w-6 h-6 object-contain"
+                  className="w-7 h-6"
                 />
                 <div>
                   <h4 className="font-bold text-gray-800">{tech.name}</h4>
@@ -50,7 +52,7 @@ const SelectedCard = ({ selectedTechs, onRemove, onRemoveAll,
 
               <button
                 onClick={() => onRemove(tech.id, tech.name)}
-                className="text-gray-600 hover:text-red-500 text-xl font-bold px-1 cursor-pointer"
+                className="text-gray-600 hover:text-red-500 text-xl font-bold px-1"
               >
                 <TiDelete />
               </button>

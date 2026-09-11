@@ -6,8 +6,8 @@ const Nav = () => {
   const [activeTab, setActiveTab] = useState("signup");
 
   return (
-    <nav className="w-full my-3 md:my-10 pb-3 border-b border-gray-100 sticky top-0 bg-white z-50">
-
+   <nav className="fixed top-0 inset-x-0 z-50 bg-white border-b border-gray-100 py-3 md:py-4">
+  
       <div className="flex justify-between items-center mx-30 gap-2 sm:gap-4">
 
         <div className="shrink-0">

@@ -1,6 +1,7 @@
 import Logo from "../assets/logo-text.png";
 
 const Footer = () => {
+  
   return (
     <footer className="mt-20 border-t border-gray-100 bg-white">
       <div className="container mx-auto px-6 py-12 max-w-7xl">

@@ -63,11 +63,11 @@ const Card = ({ cardPromise }: CardProps) => {
   };
 
   return (
-    <div className="container mx-auto px-4 py- max-w-6xl max-y-8xl lg:ml-60 md:ml-60">
+    <div className="container mx-auto max-w-6xl lg:ml-60 md:ml-60 lg:-mt-35">
 
       <ToastContainer />
 
-      <div className="mb-8">
+      <div className="mb-10">
         <h2 className="text-3xl font-bold text-gray-900">
           Explore the {""}
           <span className="bg-gradient-to-r from-[#EC4899] to-[#8B5CF6] bg-clip-text text-transparent">
@@ -80,15 +80,15 @@ const Card = ({ cardPromise }: CardProps) => {
       </div>
 
       {/* Card */}
-      <div className="flex flex-col lg:flex-row gap-6 items-start">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 flex-1">
+      <div className="flex flex-col lg:flex-row gap-10 items-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 flex-1">
           {techs.map((item) => {
             const isAdded = selectedTechs.some((tech) => tech.id === item.id);
 
             return (
               <div
                 key={item.id}
-                className="w-full border border-gray-200 rounded-2xl p-5 bg-white shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col justify-between min-h-[290px] group"
+                className="border border-gray-200 rounded-2xl p-5 bg-white shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col justify-between min-h-[290px] group"
               >
                 <div>
                   <div className="flex justify-between items-start mb-4">

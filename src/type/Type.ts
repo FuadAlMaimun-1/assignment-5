@@ -6,5 +6,5 @@ export interface Itechnology {
   icon: string;
   rating: number;
   difficulty: "Beginner-Friendly" | "Intermediate" | "Advanced" | string;
-  badge?: string;
+  badge: string;
 }
