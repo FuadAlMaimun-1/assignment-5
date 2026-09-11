@@ -1,6 +1,7 @@
 import { use, useState } from "react";
 import type { Itechnology } from "../../type/Type";
 import { toast, ToastContainer, Bounce } from "react-toastify";
+import { TiDelete } from "react-icons/ti";
 import "react-toastify/dist/ReactToastify.css";
 
 interface CardProps {
@@ -12,7 +13,7 @@ const Card = ({ cardPromise }: CardProps) => {
   const [selectedTechs, setSelectedTechs] = useState<Itechnology[]>([]);
 
   const handleAddToStack = (tech: Itechnology) => {
-    setSelectedTechs((prev) => [...prev, tech]);
+    setSelectedTechs((card) => [...card, tech]);
     toast.success(`Added ${tech.name} to stack!`, {
       position: "top-center",
       autoClose: 3000,
@@ -26,43 +27,52 @@ const Card = ({ cardPromise }: CardProps) => {
   };
 
   const handleRemove = (id: string | number, name: string) => {
-    setSelectedTechs((prev) => prev.filter((item) => item.id !== id));
+    setSelectedTechs((card) => card.filter((item) => item.id !== id));
     toast.info(`Removed ${name} from stack`, {
       position: "top-center",
-      autoClose: 2000,
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
       theme: "light",
+      transition: Bounce,
     });
   };
 
   const handleRemoveAll = () => {
     setSelectedTechs([]);
     toast.warn("Cleared all technologies from stack", {
-      position: "top-center",
-      autoClose: 2000,
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
       theme: "light",
+      transition: Bounce,
     });
   };
 
   return (
-    <div className="container mx-auto px-4 py- max-w-6xl max-y-8xl lg:ml-60 md:ml-60">7
-      {/* react-toastify container */}
+    <div className="container mx-auto px-4 py- max-w-6xl max-y-8xl lg:ml-60 md:ml-60">
+
       <ToastContainer />
 
-      {/* Header */}
       <div className="mb-8">
         <h2 className="text-3xl font-bold text-gray-900">
-          Explore the{" "}
+          Explore the {""}
           <span className="bg-gradient-to-r from-[#EC4899] to-[#8B5CF6] bg-clip-text text-transparent">
             Technologies
           </span>
         </h2>
-        <p className="text-gray-500 text-sm mt-1">
+        <p className="text-gray-500 mt-1">
           Pick one technology per category to build your ideal stack.
         </p>
       </div>
-
       <div className="flex flex-col lg:flex-row gap-6 items-start">
-        {/* Technologies Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 flex-1">
           {techs.map((item) => {
             const isAdded = selectedTechs.some((tech) => tech.id === item.id);
@@ -106,7 +116,6 @@ const Card = ({ cardPromise }: CardProps) => {
                   </div>
                 </div>
 
-                
                 <button
                   onClick={() => handleAddToStack(item)}
                   disabled={isAdded}
@@ -126,7 +135,6 @@ const Card = ({ cardPromise }: CardProps) => {
           })}
         </div>
 
-        {/* Selected Stack Sidebar */}
         <div className="w-full lg:w-[280px] min-h-[175px] h-fit border border-gray-200 rounded-2xl p-5 bg-white sticky top-24">
           <div className="flex items-baseline gap-2 mb-1">
             <h3 className="font-bold text-gray-900">Your Stack</h3>
@@ -157,9 +165,7 @@ const Card = ({ cardPromise }: CardProps) => {
                       className="w-6 h-6 object-contain"
                     />
                     <div>
-                      <h4 className="text-xs font-bold text-gray-800">
-                        {tech.name}
-                      </h4>
+                      <h4 className=" font-bold text-gray-800">{tech.name}</h4>
                       <p className="text-[10px] text-gray-400">
                         {tech.category}
                       </p>
@@ -170,7 +176,7 @@ const Card = ({ cardPromise }: CardProps) => {
                     onClick={() => handleRemove(tech.id, tech.name)}
                     className="text-gray-600 hover:text-red-500 text-xl font-bold px-1"
                   >
-                    ×
+                    <TiDelete />
                   </button>
                 </div>
               ))}

@@ -4,6 +4,7 @@ import Nav from "./components/Nav";
 import Banner from "./components/Banner";
 import type { Itechnology } from "./type/Type";
 import Card from "./components/card/card";
+import Footer from "./components/Footer";
 
 const getTechs = async (): Promise<Itechnology[]> => {
   const res = await fetch("/data.json");
@@ -18,7 +19,7 @@ function App() {
     <>
       <Nav />
       <Banner />
-
+      
       <Suspense
         fallback={
           <div className="flex justify-center items-center min-h-50">
@@ -28,6 +29,8 @@ function App() {
       >
         <Card cardPromise={cardPromise} />
       </Suspense>
+      
+      <Footer />
     </>
   );
 }
